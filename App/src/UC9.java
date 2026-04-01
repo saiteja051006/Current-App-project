@@ -11,7 +11,7 @@ class Bogie {
     }
 }
 
-public class UC8 {
+public class UC9 {
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
@@ -20,16 +20,20 @@ public class UC8 {
 
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("Sleeper", 70));
         bogies.add(new Bogie("First Class", 40));
+        bogies.add(new Bogie("AC Chair", 60));
 
-        List<Bogie> filtered = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        Map<String, List<Bogie>> grouped = bogies.stream()
+                .collect(Collectors.groupingBy(b -> b.name));
 
-        System.out.println("Filtered Bogies (Capacity > 60):");
+        System.out.println("Grouped Bogies:");
 
-        for (Bogie b : filtered) {
-            System.out.println("Bogie: " + b.name + " | Capacity: " + b.capacity);
+        for (Map.Entry<String, List<Bogie>> entry : grouped.entrySet()) {
+            System.out.println(entry.getKey() + ":");
+            for (Bogie b : entry.getValue()) {
+                System.out.println("  Capacity: " + b.capacity);
+            }
         }
 
         System.out.println("Program continues...");
